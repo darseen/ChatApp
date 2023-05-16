@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { messageSchema } from "./Message";
 
 const chatSchema = mongoose.Schema({
   participants: [
@@ -9,7 +8,14 @@ const chatSchema = mongoose.Schema({
       required: true,
     },
   ],
-  messages: [messageSchema],
+  messages: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Message",
+    },
+  ],
 });
 
 const Chat = mongoose.model("Chat", chatSchema);
+
+export default Chat;
