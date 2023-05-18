@@ -46,12 +46,12 @@ const userSlice = createSlice({
     });
     builder.addCase(register.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.user = action.payload;
-      console.log(user);
+      state.user = action.payload?.user;
+      state.token = action.payload?.token;
     });
     builder.addCase(register.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message;
+      state.error = action.err.message;
     });
 
     /* LOGIN */
@@ -60,12 +60,12 @@ const userSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.user = action.payload.user;
-      state.token = action.payload.token;
+      state.user = action.payload?.user;
+      state.token = action.payload?.token;
     });
     builder.addCase(login.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message;
+      state.error = action.err.message;
     });
   },
 });

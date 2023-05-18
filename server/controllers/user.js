@@ -12,7 +12,7 @@ export const register = async (req, res) => {
     await newUser.save();
     return res.status(200).json(newUser);
   } catch (err) {
-    res.status(400).json(err.message);
+    res.status(400).json({ message: err.message });
   }
 };
 
