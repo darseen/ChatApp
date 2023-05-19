@@ -1,150 +1,69 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
-import { useNavigate } from "react-router-dom";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        ChatApp
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const defaultTheme = createTheme({
-  components: {
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              borderColor: "#757de8",
-            },
-            "&:hover fieldset": {
-              borderColor: "#757de8",
-            },
-          },
-        },
-      },
-    },
-  },
-});
+import { Link } from "react-router-dom";
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     const credentials = {
-      username: data.get("username"),
-      password: data.get("password"),
+      username: formData.get("username"),
+      password: formData.get("password"),
     };
     dispatch(login(credentials));
-    if (user.user) {
-      navigate("/chats");
-    } else {
-    }
+    console.log(user);
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "transparent" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5" color="white">
-            Login
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+    <div className="w-full p-6 m-auto  rounded-md shadow-md lg:max-w-xl bg-transparent min-h-screen mt-16">
+      <h1 className="text-3xl font-semibold text-center text-white">Login</h1>
+      <form className="mt-6" onSubmit={handleSubmit}>
+        <div className="mb-2">
+          <label
+            htmlFor="username"
+            className="block text-sm font-semibold text-white"
           >
-            <TextField
-              sx={{
-                input: { color: "white" },
-              }}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-              InputLabelProps={{
-                style: { color: "white", fontSize: 14 },
-              }}
-            />
-            <TextField
-              sx={{ input: { color: "white" } }}
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              InputLabelProps={{ style: { color: "white", fontSize: 14 } }}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 5 }}
-            >
-              Login
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Register"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-          <Copyright sx={{ mt: 8, mb: 4, color: "white" }} />
-        </Box>
-      </Container>
-    </ThemeProvider>
+            Username
+          </label>
+          <input
+            type="username"
+            name="username"
+            id="username"
+            className="block w-full mb-6 px-4 bg-transparent py-2 mt-2 text-white border border-[#2196f3] rounded-md focus:border-[#2196f3] focus:ring-[#2196f3] focus:outline-none focus:ring focus:ring-opacity-40"
+          />
+        </div>
+        <div className="mb-2">
+          <label
+            htmlFor="password"
+            className="block text-sm font-semibold text-white"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className="block w-full px-4 py-2 mt-2 text-white border border-[#2196f3] rounded-md focus:border-[#2196f3] bg-transparent focus:ring-[#2196f3] focus:outline-none focus:ring focus:ring-opacity-40"
+          />
+        </div>
+        <div className="mt-6">
+          <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-[#2196f3] rounded-md hover:bg-[#2196f3] focus:outline-none focus:bg-[#2196f3]">
+            Login
+          </button>
+        </div>
+      </form>
+
+      <p className="mt-8 text-xs font-light text-center text-white">
+        {" "}
+        Don't have an account?{" "}
+        <Link to="/register" style={{ color: "#2196f3" }}>
+          Register
+        </Link>
+      </p>
+    </div>
   );
 };
 
