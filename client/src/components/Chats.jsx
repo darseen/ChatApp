@@ -164,7 +164,7 @@ const Chats2 = () => {
               </div>
             </div>
 
-            <div className="flex flex-row items-center h-16 rounded-xl bg-transparent w-full px-4 sm:static text-white fixed bottom-0">
+            <div className="flex flex-row items-center h-16 rounded-xl md:bg-transparent bg-slate-800 w-full px-4 sm:static text-white fixed bottom-0">
               <div>
                 <button className="flex items-center justify-center text-[#2196f3] hover:text-gray-600">
                   <svg

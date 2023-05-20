@@ -31,7 +31,7 @@ const Sidebar = () => {
       },
     },
     closed: {
-      width: "0",
+      width: 0,
       transition: {
         damping: 40,
       },
@@ -51,11 +51,11 @@ const Sidebar = () => {
       <motion.div
         ref={sidebarRef}
         variants={Nav_animation}
-        initial={{ x: isMobileScreen ? -250 : 0 }}
+        // initial={{ x: isMobileScreen ? 0 : -250 }}
         animate={open ? "open" : "closed"}
-        className=" md:bg-transparent bg-slate-950 text-gray shadow-xl z-[999] max-w-[16rem] w-[16rem] overflow-hidden md:relative fixed h-screen"
+        className=" md:bg-transparent bg-slate-950 text-gray shadow-xl z-[998] max-w-[16rem] w-[16rem] overflow-hidden md:relative fixed h-screen"
       >
-        <div className=" flex-col py-8 pl-6 pr-2 w-64 bg-transparent flex-shrink-0">
+        <div className=" flex-col py-8 pl-6 pr-2 w-64  bg-transparent flex-shrink-0">
           <div className="flex flex-row items-center justify-center h-12 w-full">
             <div className="flex items-center justify-center rounded-2xl text-indigo-700 bg-transparent h-10 w-10">
               <svg
