@@ -1,9 +1,14 @@
-import { useSelector } from "react-redux";
+import { Outlet, useOutlet } from "react-router-dom";
+
+import Header from "../components/Header";
 
 const Home = () => {
-  const user = useSelector((state) => state.user);
-  console.log(user);
-  return <div className="min-h-screen"></div>;
+  return (
+    <div className="min-h-screen">
+      <Header />
+      <Outlet />
+    </div>
+  );
 };
 
 export default Home;
