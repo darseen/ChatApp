@@ -1,7 +1,8 @@
-import { FaSignInAlt, FaUser } from "react-icons/fa";
+import { FaSignInAlt, FaUser, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function Example() {
+  const user = null;
   return (
     <header className="bg-transparent">
       <nav
@@ -13,22 +14,31 @@ export default function Example() {
             ChatApp
           </Link>
         </div>
-        <div className=" flex flex-1 justify-end">
-          <Link
-            to="/login"
-            className="flex flex-col items-center me-3 text-white"
-          >
-            <FaSignInAlt />
-            <span className="mt-1">Login</span>
-          </Link>
-          <Link
-            to="/register"
-            className="flex flex-col items-center ms-3 text-white"
-          >
-            <FaUser />
-            <span className="mt-1">Register</span>
-          </Link>
-        </div>
+        {user ? (
+          <header className="flex flex-col items-center me-3 text-white">
+            <Link to="/login" className="flex flex-col items-center">
+              <FaSignOutAlt />
+              <span className="mt-1">Logout</span>
+            </Link>
+          </header>
+        ) : (
+          <div className=" flex flex-1 justify-end">
+            <Link
+              to="/login"
+              className="flex flex-col items-center me-3 text-white"
+            >
+              <FaSignInAlt />
+              <span className="mt-1">Login</span>
+            </Link>
+            <Link
+              to="/register"
+              className="flex flex-col items-center ms-3 text-white"
+            >
+              <FaUser />
+              <span className="mt-1">Register</span>
+            </Link>
+          </div>
+        )}
       </nav>
     </header>
   );

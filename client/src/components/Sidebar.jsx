@@ -3,7 +3,8 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const Sidebar = () => {
   const isMobileScreen = useMediaQuery({ query: "(max-width: 768px)" });
@@ -25,7 +26,7 @@ const Sidebar = () => {
 
   const Nav_animation = {
     open: {
-      width: "16rem",
+      width: "17rem",
       transition: {
         damping: 40,
       },
@@ -53,7 +54,7 @@ const Sidebar = () => {
         variants={Nav_animation}
         // initial={{ x: isMobileScreen ? 0 : -250 }}
         animate={open ? "open" : "closed"}
-        className=" md:bg-transparent bg-slate-950 text-gray shadow-xl z-[998] max-w-[16rem] w-[16rem] overflow-hidden md:relative fixed h-screen"
+        className=" md:bg-transparent bg-slate-950 text-gray shadow-xl z-[998] max-w-[17rem] w-[17rem] overflow-hidden md:relative fixed h-screen"
       >
         <div className=" flex-col py-8 pl-6 pr-2 w-64  bg-transparent flex-shrink-0">
           <div className="flex flex-row items-center justify-center h-12 w-full">
@@ -73,9 +74,9 @@ const Sidebar = () => {
                 />
               </svg>
             </div>
-            <div className="ml-2 font-bold text-2xl text-white">ChatApp</div>
+            <div className="font-bold text-2xl text-white">ChatApp</div>
           </div>
-          <div className="flex flex-col items-center bg-tranparent border border-[#2196f3] mt-4 w-full py-6 px-4 rounded-lg">
+          <div className="flex flex-col items-center bg-tranparent border border-[#2196f3] mt-3 w-full py-4 px-3 rounded-lg">
             <div className="h-20 w-20 rounded-full border overflow-hidden">
               <img
                 src="https://avatars3.githubusercontent.com/u/2763884?s=128"
@@ -101,7 +102,37 @@ const Sidebar = () => {
                 4
               </span>
             </div>
-            <div className="flex flex-col space-y-1 mt-4 -mx-2 h-48 overflow-y-auto">
+            <div className="flex flex-col space-y-1 mt-4 mx-2 h-48 overflow-y-auto">
+              <button className="flex flex-row items-center hover:bg-[#2196f3] rounded-xl p-2">
+                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
+                  H
+                </div>
+                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
+              </button>
+              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
+                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
+                  H
+                </div>
+                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
+              </button>
+              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
+                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
+                  H
+                </div>
+                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
+              </button>
+              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
+                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
+                  H
+                </div>
+                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
+              </button>
+              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
+                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
+                  H
+                </div>
+                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
+              </button>
               <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
                 <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
                   H
@@ -137,6 +168,12 @@ const Sidebar = () => {
               </button>
             </div>
           </div>
+          <header className="flex flex-row justify-evenly mb-3 mt-8">
+            <Link to="/login" className="flex flex-col items-center">
+              <FaSignOutAlt />
+              <span className="mt-1">Logout</span>
+            </Link>
+          </header>
         </div>
       </motion.div>
 

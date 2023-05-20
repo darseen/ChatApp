@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../features/userSlice";
 import { Link } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
 
 const Login = () => {
   const user = useSelector((state) => state.user);
@@ -20,6 +21,9 @@ const Login = () => {
 
   return (
     <div className="w-full p-6 m-auto  rounded-md shadow-md lg:max-w-xl bg-transparent min-h-screen mt-16">
+      <div className="flex flex-col items-center text-2xl text-white mb-3">
+        <FaUser />
+      </div>
       <h1 className="text-3xl font-semibold text-center text-white">
         Register
       </h1>
@@ -63,7 +67,7 @@ const Login = () => {
             type="password"
             name="password"
             id="password"
-            className="block w-full px-4 py-2 mt-2 text-white bg-whi border border-[#2196f3] rounded-md focus:border-[#2196f3] bg-transparent focus:ring-[#2196f3] focus:outline-none focus:ring focus:ring-opacity-40"
+            className="block w-full px-4 py-2 mt-2 text-white border border-[#2196f3] rounded-md focus:border-[#2196f3] bg-transparent focus:ring-[#2196f3] focus:outline-none focus:ring focus:ring-opacity-40"
           />
         </div>
         <div className="mt-6">

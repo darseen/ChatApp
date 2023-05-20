@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
 import { Link } from "react-router-dom";
+import { FaSignInAlt } from "react-icons/fa";
 
 const Login = () => {
   const user = useSelector((state) => state.user);
@@ -19,6 +20,9 @@ const Login = () => {
 
   return (
     <div className="w-full p-6 m-auto  rounded-md shadow-md lg:max-w-xl bg-transparent min-h-screen mt-16">
+      <div className="flex flex-col items-center text-2xl text-white mb-3">
+        <FaSignInAlt />
+      </div>
       <h1 className="text-3xl font-semibold text-center text-white">Login</h1>
       <form className="mt-6" onSubmit={handleSubmit}>
         <div className="mb-2">
