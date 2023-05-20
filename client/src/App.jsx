@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 
 /* COMPONENTS IMPORT */
-import Home from "./components/Home";
-import Chats from "./components/Chats";
-import Register from "./components/Register";
-import Login from "./components/Login";
+import Home from "./pages/Home";
+import Chats from "./pages/Chats";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 import "./App.css";
 

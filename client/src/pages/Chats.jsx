@@ -1,4 +1,4 @@
-import Sidebar from "./Sidebar";
+import Sidebar from "../components/Sidebar";
 
 const Chats2 = () => {
   return (
