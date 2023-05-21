@@ -1,8 +1,9 @@
 import { FaSignInAlt, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Example() {
-  const user = null;
+  const user = useSelector((state) => state);
   return (
     <header className="bg-transparent">
       <nav
@@ -14,7 +15,7 @@ export default function Example() {
             ChatApp
           </Link>
         </div>
-        {user ? (
+        {user.token ? (
           <header className="flex flex-col items-center me-3 text-white">
             <Link to="/login" className="flex flex-col items-center">
               <FaSignOutAlt />

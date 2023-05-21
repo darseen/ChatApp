@@ -3,14 +3,23 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/userSlice";
 
 const Sidebar = () => {
   const isMobileScreen = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isMobileScreen ? false : true);
   const sidebarRef = useRef();
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   useEffect(() => {
     if (isMobileScreen) {
@@ -169,10 +178,13 @@ const Sidebar = () => {
             </div>
           </div>
           <header className="flex flex-row justify-evenly mb-3 mt-8">
-            <Link to="/login" className="flex flex-col items-center">
+            <button
+              className="flex flex-col items-center"
+              onClick={handleLogout}
+            >
               <FaSignOutAlt />
               <span className="mt-1">Logout</span>
-            </Link>
+            </button>
           </header>
         </div>
       </motion.div>
