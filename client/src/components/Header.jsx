@@ -37,7 +37,10 @@ export default function Example() {
           </svg>
         </div>
         <div className=" flex flex-1 justify-start">
-          <Link to="/" className="ml-2 font-bold text-2xl text-white">
+          <Link
+            to="/"
+            className="ml-2 font-bold text-2xl animate-text bg-gradient-to-r from-[#2196f3] via-white to-teal-400 bg-clip-text text-transparent"
+          >
             ChatApp
           </Link>
         </div>

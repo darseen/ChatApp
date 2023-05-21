@@ -24,9 +24,12 @@ const Home = () => {
             </svg>
           </div>
 
-          <span> A MERN Stack Chat Application</span>
+          <span className="animate-text bg-gradient-to-r from-[#2196f3] via-white to-teal-400 bg-clip-text text-transparent font-black">
+            {" "}
+            A MERN Stack Chat Application
+          </span>
 
-          <h2 className="text-2xl font-4 font-semibold text-[#2196f3] text-center mt-8">
+          <h2 className="text-2xl font-4 font-semibold text-white text-center mt-8">
             <br />
             Built With Node.js, Mongodb, Express.js, Socket.io, React.js and
             Redux. Styled with Tailwind CSS
