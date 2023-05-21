@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Chats from "./pages/Chats";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Error from "./pages/Error";
 
 import "./App.css";
 import { useSelector } from "react-redux";
