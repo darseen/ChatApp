@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const registerUrl = "http://localhost:3001/user/auth/register";
-const loginUrl = "http://localhost:3001/user/auth/login";
+const registerUrl = "http://192.168.1.113:3001/user/auth/register";
+const loginUrl = "http://192.168.1.113:3001/user/auth/login";
 
 const initialState = {
   user: null,

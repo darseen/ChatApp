@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/userSlice";
@@ -83,7 +83,9 @@ const Sidebar = () => {
                 />
               </svg>
             </div>
-            <div className="font-bold text-2xl text-white">ChatApp</div>
+            <Link to="/" className="font-bold text-2xl text-white">
+              ChatApp
+            </Link>
           </div>
           <div className="flex flex-col items-center bg-tranparent border border-[#2196f3] mt-3 w-full py-4 px-3 rounded-lg">
             <div className="h-20 w-20 rounded-full border overflow-hidden">
