@@ -3,23 +3,14 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaSignOutAlt } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { logout } from "../features/userSlice";
+import { Link, useLocation } from "react-router-dom";
+import ActiveUsers from "./ActiveUsers";
 
-const GlobalSidebar = () => {
+const GlobalSidebar = ({ users }) => {
   const isMobileScreen = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isMobileScreen ? false : true);
   const sidebarRef = useRef();
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate("/");
-  };
 
   useEffect(() => {
     if (isMobileScreen) {
@@ -91,16 +82,11 @@ const GlobalSidebar = () => {
             <div className="flex flex-row items-center justify-between text-xs">
               <span className="font-bold text-white">Active Users</span>
               <span className="flex items-center justify-center bg-indigo-600 h-4 w-4 rounded-full">
-                4
+                {users.length}
               </span>
             </div>
             <div className="flex flex-col space-y-1 mt-4 mx-2 h-48 overflow-y-auto overflow-visible">
-              <button className="flex flex-row items-center hover:bg-[#2196f3] rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-indigo-600 rounded-full">
-                  J
-                </div>
-                <div className="ml-2 text-sm font-semibold">Jerry Guzman</div>
-              </button>
+              <ActiveUsers users={users} />
             </div>
           </div>
         </div>

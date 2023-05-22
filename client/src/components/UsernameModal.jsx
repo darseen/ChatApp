@@ -5,6 +5,7 @@ const UsernameModal = ({ setUsername, socket }) => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    socket.emit("users", input);
     if (input.trim() !== "") {
       setUsername(input);
     }

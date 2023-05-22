@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import { Socket, io } from "socket.io-client";
 import { useState, useEffect } from "react";
 
 import GlobalSidebar from "../components/GlobalSidebar";
@@ -11,8 +11,9 @@ const GlobalChat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [username, setUsername] = useState("");
-  const [users, setUsers] = useState("");
+  const [users, setUsers] = useState([]);
 
+  /* SEND MESSAGES */
   const handleSendMessage = () => {
     const messageData = {
       username: username,
@@ -23,6 +24,14 @@ const GlobalChat = () => {
     setMessage("");
   };
 
+  /* RECEIVE ACTIVE USERS */
+  useEffect(() => {
+    socket.on("send_users", (data) => {
+      setUsers([...data]);
+    });
+  }, [socket]);
+
+  /* RECEIVE MESSAGES */
   useEffect(() => {
     socket.on("global_server", (data) => {
       setMessages((messagesList) => [...messagesList, data]);
@@ -37,7 +46,7 @@ const GlobalChat = () => {
         ""
       )}
       <div className="flex flex-row h-full w-full overflow-x-hidden">
-        <GlobalSidebar />
+        <GlobalSidebar users={users} />
         <div className="flex flex-col flex-auto h-full p-1">
           <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-tranparent h-full p-1">
             <div className="flex flex-col h-full overflow-x-auto">

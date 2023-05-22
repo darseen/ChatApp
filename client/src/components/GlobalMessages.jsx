@@ -1,12 +1,16 @@
 const GlobalMessages = ({ messages, username }) => {
   return messages.map((data) => {
     return username === data.username ? (
-      <Sender key={Math.random()} message={data.message} username={username} />
+      <Sender
+        key={Math.random()}
+        message={data.message}
+        username={data.username}
+      />
     ) : (
       <Receiver
         key={Math.random()}
         message={data.message}
-        username={username}
+        username={data.username}
       />
     );
   });
