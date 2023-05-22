@@ -33,10 +33,11 @@ const PORT = process.env.PORT || 3001;
 const MONGODB_URL = process.env.MONGODB_URL;
 
 io.on("connection", (socket) => {
-  console.log("user connected");
+  console.log("User connected: ", socket.id);
 
-  socket.on("send", (data) => {
-    console.log(data.message);
+  /* GLOBAL CHAT */
+  socket.on("global_client", (data) => {
+    socket.broadcast.emit("global_server", data);
   });
 });
 

@@ -6,6 +6,7 @@ import Chats from "./pages/Chats";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
+import GlobalChat from "./pages/GlobalChat";
 
 import "./App.css";
 import { useSelector } from "react-redux";
@@ -26,6 +27,7 @@ const App = () => {
           path="/chats"
           element={user.token ? <Chats /> : <Navigate to="/login" />}
         />
+        <Route path="/global" element={<GlobalChat />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </>

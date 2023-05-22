@@ -24,7 +24,7 @@ const Home = () => {
             </svg>
           </div>
 
-          <span className="animate-text bg-gradient-to-r from-[#2196f3] via-white to-teal-400 bg-clip-text text-transparent font-black">
+          <span className="animate-text bg-gradient-to-r from-[#2196f3] via-white to-[#2196f3] bg-clip-text text-transparent font-black">
             {" "}
             A MERN Stack Chat Application
           </span>

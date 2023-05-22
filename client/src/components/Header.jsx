@@ -39,7 +39,7 @@ export default function Example() {
         <div className=" flex flex-1 justify-start">
           <Link
             to="/"
-            className="ml-2 font-bold text-2xl animate-text bg-gradient-to-r from-[#2196f3] via-white to-teal-400 bg-clip-text text-transparent"
+            className="ml-2 font-bold text-2xl animate-text bg-gradient-to-r from-[#2196f3] via-white to-[#2196f3] bg-clip-text text-transparent"
           >
             ChatApp
           </Link>
