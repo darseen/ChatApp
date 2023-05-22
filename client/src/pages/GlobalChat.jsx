@@ -1,4 +1,4 @@
-import { Socket, io } from "socket.io-client";
+import { io } from "socket.io-client";
 import { useState, useEffect } from "react";
 
 import GlobalSidebar from "../components/GlobalSidebar";
@@ -19,9 +19,11 @@ const GlobalChat = () => {
       username: username,
       message: message,
     };
-    socket.emit("global_client", messageData);
-    setMessages((messagesList) => [...messagesList, messageData]);
-    setMessage("");
+    if (message !== "") {
+      socket.emit("global_client", messageData);
+      setMessages((messagesList) => [...messagesList, messageData]);
+      setMessage("");
+    }
   };
 
   /* RECEIVE ACTIVE USERS */
@@ -82,6 +84,9 @@ const GlobalChat = () => {
                     type="text"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    onKeyDown={(e) => {
+                      e.key === "Enter" && handleSendMessage();
+                    }}
                     className="flex w-full border rounded-xl bg-transparent  border-[#2196f3] focus:outline-none focus:border-indigo-300 pl-4 h-10"
                   />
                   <button className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-[#2196f3] hover:text-gray-600">

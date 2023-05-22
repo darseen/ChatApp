@@ -74,7 +74,10 @@ const GlobalSidebar = ({ users }) => {
                 />
               </svg>
             </div>
-            <Link to="/" className="font-bold text-2xl text-white">
+            <Link
+              to="/"
+              className="ml-2 font-bold text-2xl animate-text bg-gradient-to-r from-[#2196f3] via-white to-[#2196f3] bg-clip-text text-transparent"
+            >
               ChatApp
             </Link>
           </div>
