@@ -9,7 +9,6 @@ export default function Example() {
   const user = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
@@ -45,7 +44,14 @@ export default function Example() {
           </Link>
         </div>
         {user.token ? (
-          <header className="flex flex-col items-center me-3 text-white">
+          <header className="flex flex-1 justify-end items-center me-3 text-white">
+            <Link
+              to={`/user/${user.user._id}`}
+              className="flex flex-col items-center me-3 text-white"
+            >
+              <FaUser />
+              <span className="mt-1">Profile</span>
+            </Link>
             <button
               className="flex flex-col items-center"
               onClick={handleLogout}

@@ -26,7 +26,7 @@ const io = new Server(server, {
 });
 
 /* ROUTES */
-app.use("/user/auth", userRoutes);
+app.use("/", userRoutes);
 
 /* CONNECTION SETUP */
 const PORT = process.env.PORT || 3001;
