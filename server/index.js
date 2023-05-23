@@ -32,7 +32,10 @@ app.use("/", userRoutes);
 const PORT = process.env.PORT || 3001;
 const MONGODB_URL = process.env.MONGODB_URL;
 
-const users = new Map();
+const activeUsers = new Map();
+export const getActiveUsers = () => activeUsers;
+export const setActiveUsers = (value) => (activeUsers = value);
+
 io.on("connection", (socket) => {
   console.log("User connected: ", socket.id);
 
@@ -43,17 +46,17 @@ io.on("connection", (socket) => {
 
   /* GET USERNAME */
   socket.on("users", (data) => {
-    users.set(socket.id, data);
-    io.emit("send_users", Array.from(users.values()));
+    activeUsers.set(socket.id, data);
+    io.emit("send_users", Array.from(activeUsers.values()));
   });
   // remove user from list on disconnect
   socket.on("disconnect", () => {
-    users.delete(socket.id);
-    io.emit("send_users", Array.from(users.values()));
+    activeUsers.delete(socket.id);
+    io.emit("send_users", Array.from(activeUsers.values()));
   });
   // send users list when requested
   socket.on("get_active_users", () => {
-    io.emit("send_users", Array.from(users.values()));
+    io.emit("send_users", Array.from(activeUsers.values()));
   });
 });
 

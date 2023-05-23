@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { getActiveUsers, setActiveUsers } from "../index.js";
 
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -11,6 +12,10 @@ export const register = async (req, res) => {
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+
+    const activeUsers = getActiveUsers();
+    activeUsers.set(newUser._id, newUser.username);
+
     return res.status(200).json({ user: newUser, token });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -31,6 +36,9 @@ export const login = async (req, res) => {
     }
     delete user.password;
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+    const activeUsers = getActiveUsers();
+    activeUsers.set(user._id, user.username);
 
     res.status(200).json({ user, token });
   } catch (err) {

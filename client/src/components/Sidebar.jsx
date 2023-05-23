@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
@@ -10,7 +11,8 @@ import { logout } from "../features/userSlice";
 import axios from "axios";
 import UserInfo from "./UserInfo";
 
-const Sidebar = ({ activeUsers }) => {
+const socket = io("http://192.168.1.113:3001");
+const Sidebar = () => {
   const isMobileScreen = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isMobileScreen ? false : true);
   const sidebarRef = useRef();
@@ -18,9 +20,18 @@ const Sidebar = ({ activeUsers }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const username = useSelector((state) => state.user.username);
   const token = useSelector((state) => state.token);
   const [users, setUsers] = useState([]);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ username });
+  const [activeUsers, setActiveUsers] = useState([]);
+
+  useEffect(() => {
+    socket.emit("get_active_users");
+    socket.on("send_users", (data) => {
+      setActiveUsers(data);
+    });
+  }, [user]);
 
   useEffect(() => {
     (async () => {
@@ -31,14 +42,12 @@ const Sidebar = ({ activeUsers }) => {
           },
         });
         setUsers(res.data);
-        setUser(res.data[0]);
       } catch (err) {
         console.log(err.message);
       }
     })();
-  }, []);
+  }, [user]);
 
-  console.log(user);
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
@@ -133,7 +142,7 @@ const Sidebar = ({ activeUsers }) => {
                       {user.username[0].toUpperCase()}
                     </div>
                     <div className="ml-2 text-sm font-semibold">
-                      {user.username}
+                      {user.username} {user.username === username && "(You)"}
                     </div>
                   </button>
                 );
