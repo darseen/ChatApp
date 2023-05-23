@@ -1,12 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../features/userSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import Header from "../components/Header";
+import Loading from "../components/Loading";
 
 const Login = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,8 +19,12 @@ const Login = () => {
       password: formData.get("password"),
     };
     dispatch(register(credentials));
-    console.log(user);
+    navigate("/chats");
   };
+
+  if (user.isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>

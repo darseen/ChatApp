@@ -3,9 +3,10 @@ import { login } from "../features/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignInAlt } from "react-icons/fa";
 import Header from "../components/Header";
+import Loading from "../components/Loading";
 
 const Login = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,7 +21,9 @@ const Login = () => {
     console.log(user);
     navigate("/chats");
   };
-
+  if (user.isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <Header />
