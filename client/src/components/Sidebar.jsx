@@ -5,10 +5,12 @@ import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/userSlice";
+import axios from "axios";
+import UserInfo from "./UserInfo";
 
-const Sidebar = () => {
+const Sidebar = ({ activeUsers }) => {
   const isMobileScreen = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isMobileScreen ? false : true);
   const sidebarRef = useRef();
@@ -16,6 +18,27 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const token = useSelector((state) => state.token);
+  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get("http://192.168.1.113:3001/users", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+        setUsers(res.data);
+        setUser(res.data[0]);
+      } catch (err) {
+        console.log(err.message);
+      }
+    })();
+  }, []);
+
+  console.log(user);
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
@@ -61,7 +84,6 @@ const Sidebar = () => {
       <motion.div
         ref={sidebarRef}
         variants={Nav_animation}
-        // initial={{ x: isMobileScreen ? 0 : -250 }}
         animate={open ? "open" : "closed"}
         className=" md:bg-transparent bg-slate-950 text-gray shadow-xl z-[998] max-w-[17rem] w-[17rem] overflow-hidden md:relative fixed h-screen"
       >
@@ -90,96 +112,32 @@ const Sidebar = () => {
               ChatApp
             </Link>
           </div>
-          <div className="flex flex-col items-center bg-tranparent border border-[#2196f3] mt-3 w-full py-4 px-3 rounded-lg">
-            <div className="h-20 w-20 rounded-full border overflow-hidden">
-              <img
-                src="https://avatars3.githubusercontent.com/u/2763884?s=128"
-                alt="Avatar"
-                className="h-full w-full"
-              />
-            </div>
-            <div className="text-sm font-semibold mt-2 text-white">
-              Aminos Co.
-            </div>
-            <div className="text-xs text-gray-500">Lead UI/UX Designer</div>
-            <div className="flex flex-row items-center mt-3">
-              <div className="flex flex-col justify-center h-4 w-8 bg-indigo-500 rounded-full">
-                <div className="h-3 w-3 bg-white rounded-full self-end mr-1" />
-              </div>
-              <div className="leading-none ml-1 text-xs text-white">Active</div>
-            </div>
-          </div>
+          <UserInfo user={user} activeUsers={activeUsers} />
           <div className="flex flex-col mt-8">
             <div className="flex flex-row items-center justify-between text-xs">
-              <span className="font-bold text-white">Active Users</span>
+              <span className="font-bold text-white">Users</span>
               <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">
                 4
               </span>
             </div>
             <div className="flex flex-col space-y-1 mt-4 mx-2 h-48 overflow-y-auto">
-              <button className="flex flex-row items-center hover:bg-[#2196f3] rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
-                  H
-                </div>
-                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
-              </button>
-              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
-                  H
-                </div>
-                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
-              </button>
-              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
-                  H
-                </div>
-                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
-              </button>
-              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
-                  H
-                </div>
-                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
-              </button>
-              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
-                  H
-                </div>
-                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
-              </button>
-              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
-                  H
-                </div>
-                <div className="ml-2 text-sm font-semibold">Henry Boyd</div>
-              </button>
-              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-gray-200 rounded-full">
-                  M
-                </div>
-                <div className="ml-2 text-sm font-semibold">Marta Curtis</div>
-                <div className="flex items-center justify-center ml-auto text-xs text-white bg-red-500 h-4 w-4 rounded leading-none">
-                  2
-                </div>
-              </button>
-              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-orange-200 rounded-full">
-                  P
-                </div>
-                <div className="ml-2 text-sm font-semibold">Philip Tucker</div>
-              </button>
-              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-pink-200 rounded-full">
-                  C
-                </div>
-                <div className="ml-2 text-sm font-semibold">Christine Reid</div>
-              </button>
-              <button className="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-                <div className="flex items-center justify-center h-8 w-8 bg-purple-200 rounded-full">
-                  J
-                </div>
-                <div className="ml-2 text-sm font-semibold">Jerry Guzman</div>
-              </button>
+              {users.map((user) => {
+                return (
+                  <button
+                    key={user._id}
+                    type="button"
+                    className="flex flex-row items-center hover:bg-[#2196f3] rounded-xl p-2"
+                    onClick={() => setUser(user)}
+                  >
+                    <div className="flex items-center justify-center h-8 w-8 bg-indigo-500 rounded-full">
+                      {user.username[0].toUpperCase()}
+                    </div>
+                    <div className="ml-2 text-sm font-semibold">
+                      {user.username}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
           <header className="flex flex-row justify-evenly mb-3 mt-8">

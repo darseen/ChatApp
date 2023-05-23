@@ -1,10 +1,21 @@
+import { io } from "socket.io-client";
 import Sidebar from "../components/Sidebar";
+import { useEffect, useState } from "react";
 
-const Chats2 = () => {
+const socket = io("http://192.168.1.113:3001");
+const Chats = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    socket.emit("get_active_users");
+    socket.on("send_users", (data) => {
+      setUsers(data);
+    });
+  });
   return (
     <div className="flex h-screen antialiased text-gray-800">
       <div className="flex flex-row h-full w-full overflow-x-hidden">
-        <Sidebar />
+        <Sidebar activeUsers={users} />
         <div className="flex flex-col flex-auto h-full p-1">
           <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-tranparent h-full p-1">
             <div className="flex flex-col h-full overflow-x-auto">
@@ -236,4 +247,4 @@ const Chats2 = () => {
   );
 };
 
-export default Chats2;
+export default Chats;
