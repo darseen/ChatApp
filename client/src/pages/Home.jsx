@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const user = useSelector((state) => state);
   return (
     <>
       <Header />
@@ -43,14 +45,25 @@ const Home = () => {
                 <span className="justify-center">Global Chat</span>
               </div>
             </Link>
-            <Link
-              className="inline-flex items-center p-1 font-semibold text-lg rounded-xl tracking-tighter mr-3 text-white  bg-transparent ml-11 bg-gradient-to-r from-blue-500 to-blue-800 px-14 text-md md:mt-0 focus:shadow-outline"
-              to="/register"
-            >
-              <div className="flex text-lg">
-                <span className="justify-center">Register</span>
-              </div>
-            </Link>
+            {!user.token ? (
+              <Link
+                className="inline-flex items-center p-1 font-semibold text-lg rounded-xl tracking-tighter mr-3 text-white  bg-transparent ml-11 bg-gradient-to-r from-blue-500 to-blue-800 px-14 text-md md:mt-0 focus:shadow-outline"
+                to="/register"
+              >
+                <div className="flex text-lg">
+                  <span className="justify-center">Register</span>
+                </div>
+              </Link>
+            ) : (
+              <Link
+                className="inline-flex items-center p-1 font-semibold text-lg rounded-xl tracking-tighter mr-3 text-white  bg-transparent ml-11 bg-gradient-to-r from-blue-500 to-blue-800 px-14 text-md md:mt-0 focus:shadow-outline"
+                to="/chats"
+              >
+                <div className="flex text-lg">
+                  <span className="justify-center">Chats</span>
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </section>

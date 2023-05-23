@@ -14,6 +14,7 @@ const User = () => {
   const [activeUsers, setActiveUsers] = useState([]);
 
   useEffect(() => {
+    socket.emit("get_active_users");
     socket.on("send_users", (data) => {
       setActiveUsers(data);
     });

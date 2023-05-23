@@ -40,13 +40,20 @@ io.on("connection", (socket) => {
   socket.on("global_client", (data) => {
     socket.broadcast.emit("global_server", data);
   });
+
+  /* GET USERNAME */
   socket.on("users", (data) => {
     users.set(socket.id, data);
     io.emit("send_users", Array.from(users.values()));
     console.log(users);
   });
+  // remove user from list on disconnect
   socket.on("disconnect", () => {
     users.delete(socket.id);
+    io.emit("send_users", Array.from(users.values()));
+  });
+  // send users list when requested
+  socket.on("get_active_users", () => {
     io.emit("send_users", Array.from(users.values()));
   });
 });
