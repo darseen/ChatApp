@@ -14,7 +14,8 @@ export const register = async (req, res) => {
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
 
     const activeUsers = getActiveUsers();
-    activeUsers.set(newUser._id, newUser.username);
+    activeUsers.set(newUser.email, newUser.username);
+    setActiveUsers(activeUsers);
 
     return res.status(200).json({ user: newUser, token });
   } catch (err) {
@@ -38,7 +39,8 @@ export const login = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
     const activeUsers = getActiveUsers();
-    activeUsers.set(user._id, user.username);
+    activeUsers.set(user.email, user.username);
+    setActiveUsers(activeUsers);
 
     res.status(200).json({ user, token });
   } catch (err) {
@@ -63,5 +65,20 @@ export const fetchUsers = async (req, res) => {
     res.status(200).json(users);
   } catch (err) {
     res.status(400).json({ message: err.message });
+  }
+};
+
+export const logout = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId).lean();
+    if (!user) return res.status(404).json({ message: "User not found!" });
+
+    const activeUsers = getActiveUsers();
+    activeUsers.delete(user.email);
+
+    res.status(200).json({ message: "user logged out successfully!" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };

@@ -21,6 +21,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   const username = useSelector((state) => state.user.username);
+  const userId = useSelector((state) => state.user._id);
   const token = useSelector((state) => state.token);
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({ username });
@@ -49,7 +50,8 @@ const Sidebar = () => {
   }, [user]);
 
   const handleLogout = () => {
-    dispatch(logout());
+    const args = { userId, token };
+    dispatch(logout(args));
     navigate("/");
   };
 
@@ -126,7 +128,7 @@ const Sidebar = () => {
             <div className="flex flex-row items-center justify-between text-xs">
               <span className="font-bold text-white">Users</span>
               <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">
-                4
+                {users.length}
               </span>
             </div>
             <div className="flex flex-col space-y-1 mt-4 mx-2 h-48 overflow-y-auto">
@@ -152,7 +154,10 @@ const Sidebar = () => {
           <header className="flex flex-row justify-evenly mb-3 mt-8">
             <button
               className="flex flex-col items-center"
-              onClick={handleLogout}
+              onClick={() => {
+                socket.disconnect();
+                handleLogout();
+              }}
             >
               <FaSignOutAlt />
               <span className="mt-1">Logout</span>

@@ -35,14 +35,28 @@ export const login = createAsyncThunk("user/login", async (credentials) => {
   }
 });
 
+export const logout = createAsyncThunk("user/logout", async (args) => {
+  const { userId, token } = args;
+  try {
+    const res = await axios.delete(
+      `http://192.168.1.113:3001/logout/${userId}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    logout: (state) => {
-      state.user = null;
-      state.token = null;
-    },
+    logout: (state) => {},
   },
   extraReducers: (builder) => {
     /* REGISTER */
@@ -72,8 +86,21 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.error = action.err.message;
     });
+
+    /* LOGOUT */
+    builder.addCase(logout.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user = null;
+      state.token = null;
+    });
+    builder.addCase(logout.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.err.message;
+    });
   },
 });
 
-export const { logout } = userSlice.actions;
 export default userSlice.reducer;

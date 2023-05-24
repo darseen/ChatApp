@@ -18,9 +18,9 @@ const Login = () => {
       password: formData.get("password"),
     };
     dispatch(login(credentials));
-    console.log(user);
     navigate("/chats");
   };
+
   if (user.isLoading) {
     return <Loading />;
   }

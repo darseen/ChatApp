@@ -32,7 +32,7 @@ app.use("/", userRoutes);
 const PORT = process.env.PORT || 3001;
 const MONGODB_URL = process.env.MONGODB_URL;
 
-const activeUsers = new Map();
+let activeUsers = new Map();
 export const getActiveUsers = () => activeUsers;
 export const setActiveUsers = (value) => (activeUsers = value);
 
