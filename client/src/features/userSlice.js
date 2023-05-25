@@ -52,12 +52,15 @@ export const logout = createAsyncThunk("user/logout", async (args) => {
   }
 });
 
+export const fetchMessages = createAsyncThunk(
+  "user/fetchMessages",
+  async () => {}
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    logout: (state) => {},
-  },
+  reducers: {},
   extraReducers: (builder) => {
     /* REGISTER */
     builder.addCase(register.pending, (state) => {
@@ -84,7 +87,7 @@ const userSlice = createSlice({
     });
     builder.addCase(login.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.err.message;
+      state.error = action.err;
     });
 
     /* LOGOUT */
@@ -98,7 +101,7 @@ const userSlice = createSlice({
     });
     builder.addCase(logout.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.err.message;
+      state.error = action.err;
     });
   },
 });

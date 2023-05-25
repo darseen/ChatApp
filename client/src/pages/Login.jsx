@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 
 const Login = () => {
-  const user = useSelector((state) => state);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

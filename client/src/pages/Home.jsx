@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const user = useSelector((state) => state);
+  const user = useSelector((state) => state.user);
   return (
     <>
       <Header />

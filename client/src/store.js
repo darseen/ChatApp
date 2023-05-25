@@ -1,5 +1,10 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import {
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
 import userReducer from "./features/userSlice";
+import messageReducer from "./features/messageSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import {
@@ -19,7 +24,10 @@ const persistedReducer = persistReducer(persistConfig, userReducer);
 
 export default () => {
   let store = configureStore({
-    reducer: persistedReducer,
+    reducer: combineReducers({
+      user: persistedReducer,
+      message: messageReducer,
+    }),
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: {

@@ -6,11 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../features/userSlice";
 
 export default function Example() {
-  const user = useSelector((state) => state);
+  const { user, token } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleLogout = () => {
-    dispatch(logout());
+    const args = {
+      userId: user._id,
+      token,
+    };
+    dispatch(logout(args));
     navigate("/");
   };
   return (
@@ -43,10 +48,10 @@ export default function Example() {
             ChatApp
           </Link>
         </div>
-        {user.token ? (
+        {token ? (
           <header className="flex flex-1 justify-end items-center me-3 text-white">
             <Link
-              to={`/user/${user.user._id}`}
+              to={`/user/${user._id}`}
               className="flex flex-col items-center me-3 text-white"
             >
               <FaUser />

@@ -20,9 +20,9 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const username = useSelector((state) => state.user.username);
-  const userId = useSelector((state) => state.user._id);
-  const token = useSelector((state) => state.token);
+  const { username, _id: userId } = useSelector((state) => state.user.user);
+  const { token } = useSelector((state) => state.user);
+  console.log("token ", token);
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({ username });
   const [activeUsers, setActiveUsers] = useState([]);
@@ -127,7 +127,7 @@ const Sidebar = () => {
           <div className="flex flex-col mt-8">
             <div className="flex flex-row items-center justify-between text-xs">
               <span className="font-bold text-white">Users</span>
-              <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">
+              <span className="flex items-center justify-center bg-indigo-500 h-4 w-4 rounded-full">
                 {users.length}
               </span>
             </div>
