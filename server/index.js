@@ -9,6 +9,7 @@ import morgan from "morgan";
 
 /* ROUTES IMPORT */
 import userRoutes from "./routes/user.js";
+import messageRoutes from "./routes/messages.js";
 
 /* CONFIGURATION */
 const app = express();
@@ -27,6 +28,7 @@ const io = new Server(server, {
 
 /* ROUTES */
 app.use("/", userRoutes);
+app.use("/", messageRoutes);
 
 /* CONNECTION SETUP */
 const PORT = process.env.PORT || 3001;
@@ -57,6 +59,14 @@ io.on("connection", (socket) => {
   // send users list when requested
   socket.on("get_active_users", () => {
     io.emit("send_users", Array.from(activeUsers.values()));
+  });
+
+  /* PRIVATE CHATS */
+  socket.on("privateChat", (chatId) => {
+    socket.join(chatId);
+    socket.on("sendPrivateMessage", (message) => {
+      io.to(chatId).emit("receivePrivateMessage", message);
+    });
   });
 });
 

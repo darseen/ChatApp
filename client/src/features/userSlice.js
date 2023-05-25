@@ -52,11 +52,6 @@ export const logout = createAsyncThunk("user/logout", async (args) => {
   }
 });
 
-export const fetchMessages = createAsyncThunk(
-  "user/fetchMessages",
-  async () => {}
-);
-
 const userSlice = createSlice({
   name: "user",
   initialState,

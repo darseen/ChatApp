@@ -12,7 +12,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo";
 
 const socket = io("http://192.168.1.113:3001");
-const Sidebar = () => {
+const Sidebar = ({ setUser2 }) => {
   const isMobileScreen = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isMobileScreen ? false : true);
   const sidebarRef = useRef();
@@ -22,7 +22,6 @@ const Sidebar = () => {
 
   const { username, _id: userId } = useSelector((state) => state.user.user);
   const { token } = useSelector((state) => state.user);
-  console.log("token ", token);
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({ username });
   const [activeUsers, setActiveUsers] = useState([]);
@@ -138,7 +137,10 @@ const Sidebar = () => {
                     key={user._id}
                     type="button"
                     className="flex flex-row items-center hover:bg-[#2196f3] rounded-xl p-2"
-                    onClick={() => setUser(user)}
+                    onClick={() => {
+                      setUser(user);
+                      setUser2(user);
+                    }}
                   >
                     <div className="flex items-center justify-center h-8 w-8 bg-indigo-500 rounded-full">
                       {user.username[0].toUpperCase()}

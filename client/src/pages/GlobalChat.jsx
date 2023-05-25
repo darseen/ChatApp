@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 import { useState, useEffect } from "react";
 
 import GlobalSidebar from "../components/GlobalSidebar";
-import GlobalMessages from "../components/GlobalMessages";
+import MessageDirection from "../components/MessageDirection";
 import UsernameModal from "../components/UsernameModal";
 
 const socket = io("http://192.168.1.113:3001");
@@ -54,7 +54,7 @@ const GlobalChat = () => {
             <div className="flex flex-col h-full overflow-x-auto">
               <div className="flex flex-col h-full">
                 <div className="grid grid-cols-6 sm:grid-cols-12 gap-y-2">
-                  <GlobalMessages messages={messages} username={username} />
+                  <MessageDirection messages={messages} username={username} />
                 </div>
               </div>
             </div>
