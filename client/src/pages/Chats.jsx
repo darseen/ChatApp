@@ -6,7 +6,7 @@ import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import MessageDirection from "../components/MessageDirection";
 
-const socket = io("http://192.168.1.113:3001");
+const socket = io("https://chatapp-zkxz.onrender.com");
 
 const Chats = () => {
   const { user, token } = useSelector((state) => state);
@@ -50,13 +50,16 @@ const Chats = () => {
     const fetchMessages = async () => {
       if (user._id === user2._id) return;
       try {
-        const res = await axios.get("http://192.168.1.113:3001/fetchMessages", {
-          headers: {
-            Authorization: "Bearer " + token,
-            user1: user?._id,
-            user2: user2?._id,
-          },
-        });
+        const res = await axios.get(
+          "https://chatapp-zkxz.onrender.com/fetchMessages",
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+              user1: user?._id,
+              user2: user2?._id,
+            },
+          }
+        );
         setChatId(res.data?.chat?._id);
         setOldChatMessages(res.data?.chat?.messages);
       } catch (err) {
@@ -79,7 +82,7 @@ const Chats = () => {
 
       try {
         const res = await axios.post(
-          "http://192.168.1.113:3001/message",
+          "https://chatapp-zkxz.onrender.com/message",
           { content, user1, user2 },
           {
             headers: {

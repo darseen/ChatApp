@@ -5,7 +5,7 @@ import Loading from "../components/Loading";
 import { io } from "socket.io-client";
 import Header from "../components/Header";
 
-const socket = io("http://192.168.1.113:3001");
+const socket = io("https://chatapp-zkxz.onrender.com");
 
 const User = () => {
   const { userId } = useParams();
@@ -25,7 +25,9 @@ const User = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`http://192.168.1.113:3001/user/${userId}`);
+        const res = await axios.get(
+          `https://chatapp-zkxz.onrender.com/user/${userId}`
+        );
         setUser(res.data);
       } catch (err) {
         setIsLoading(false);

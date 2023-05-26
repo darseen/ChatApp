@@ -11,7 +11,7 @@ import { logout } from "../features/userSlice";
 import axios from "axios";
 import UserInfo from "./UserInfo";
 
-const socket = io("http://192.168.1.113:3001");
+const socket = io("https://chatapp-zkxz.onrender.com");
 const Sidebar = ({ setUser2 }) => {
   const isMobileScreen = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isMobileScreen ? false : true);

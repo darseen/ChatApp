@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const registerUrl = "http://192.168.1.113:3001/register";
-const loginUrl = "http://192.168.1.113:3001/login";
+const registerUrl = "https://chatapp-zkxz.onrender.com/register";
+const loginUrl = "https://chatapp-zkxz.onrender.com/login";
 
 const initialState = {
   user: null,
@@ -39,7 +39,7 @@ export const logout = createAsyncThunk("user/logout", async (args) => {
   const { userId, token } = args;
   try {
     const res = await axios.delete(
-      `http://192.168.1.113:3001/logout/${userId}`,
+      `https://chatapp-zkxz.onrender.com/logout/${userId}`,
       {
         headers: {
           Authorization: "Bearer " + token,

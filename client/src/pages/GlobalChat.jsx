@@ -5,7 +5,7 @@ import GlobalSidebar from "../components/GlobalSidebar";
 import MessageDirection from "../components/MessageDirection";
 import UsernameModal from "../components/UsernameModal";
 
-const socket = io("http://192.168.1.113:3001");
+const socket = io("https://chatapp-zkxz.onrender.com");
 
 const GlobalChat = () => {
   const [message, setMessage] = useState("");
