@@ -1,61 +1,62 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
-import { fetchMessages, sendMessage } from "../features/messageSlice";
+import { sendMessage } from "../features/messageSlice";
+import axios from "axios";
 
 import Sidebar from "../components/Sidebar";
 import MessageDirection from "../components/MessageDirection";
-import Loading from "../components/Loading";
 
 const socket = io("http://192.168.1.113:3001");
 
 const Chats = () => {
   const { user, token } = useSelector((state) => state.user);
-  const { messages: chatMessages, chatId } = useSelector(
-    (state) => state.message
-  );
   const [user2, setUser2] = useState({});
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [displayMessages, setDisplayMessages] = useState([]);
+  const [oldChatMessages, setOldChatMessages] = useState([]);
+  const [newChatMessages, setNewChatMessages] = useState([]);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setMessages([]);
-    dispatch(fetchMessages({ token, user1: user?._id, user2: user2?._id }));
-
-    const chatMessagesFormat = chatMessages?.map((obj) => ({
-      username: obj?.sender?.username,
-      message: obj?.content,
-    }));
-
-    setMessages(() => {
-      if (chatMessages) return [...chatMessagesFormat];
-      else return [];
-    });
+    setDisplayMessages([]);
   }, [user2]);
 
   useEffect(() => {
-    if (chatId) socket.emit("privateChat", chatId);
-    const messageData = {
-      username: user.username,
-      message,
-    };
-    socket.emit("sendPrivateMessage", messageData);
-  }, [chatId, socket]);
+    if (oldChatMessages) {
+      const oldChatMessagesFormat = oldChatMessages.map((obj) => ({
+        username: obj.sender?.username,
+        message: obj.content,
+      }));
+
+      setDisplayMessages(oldChatMessagesFormat);
+    }
+  }, [oldChatMessages]);
 
   useEffect(() => {
-    socket.on("receivePrivateMessage", (message) => {
-      const chatMessagesFormat = chatMessages?.map((obj) => ({
-        username: obj?.sender?.username,
-        message: obj?.content,
-      }));
-      setMessages((currentList) => {
-        if (chatMessages) return [...chatMessagesFormat, message];
-        else return [message];
-      });
-    });
-  }, [socket]);
+    const fetchMessages = async () => {
+      try {
+        const res = await axios.get("http://192.168.1.113:3001/fetchMessages", {
+          headers: {
+            Authorization: "Bearer " + token,
+            user1: user?._id,
+            user2: user2?._id,
+          },
+        });
+
+        setOldChatMessages(res.data?.chat?.messages);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchMessages();
+  }, [user2, token]);
+
+  useEffect(() => {
+    setDisplayMessages((currentList) => [...currentList, ...newChatMessages]);
+  }, [newChatMessages]);
 
   const handleSendMessage = () => {
     const data = {
@@ -70,15 +71,7 @@ const Chats = () => {
       username: user.username,
       message,
     };
-    const chatMessagesFormat = chatMessages?.map((obj) => ({
-      username: obj?.sender?.username,
-      message: obj?.content,
-    }));
-
-    setMessages((currentList) => {
-      if (chatMessages) return [...chatMessagesFormat, ...currentList];
-      else return [...currentList, messageData];
-    });
+    setNewChatMessages((currentList) => [...currentList, messageData]);
     setMessage("");
   };
 
@@ -93,13 +86,13 @@ const Chats = () => {
                 <div className="grid grid-cols-6 sm:grid-cols-12 gap-y-2">
                   <MessageDirection
                     username={user.username}
-                    messages={messages}
+                    messages={displayMessages}
                   />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-row items-center h-16 rounded-xl md:bg-transparent bg-slate-800 w-full px-4 sm:static text-white fixed bottom-0">
+            <div className="flex flex-row items-center h-16 rounded-xl bg-transparent w-full px-4 sm:static text-white fixed bottom-0">
               <div>
                 <button className="flex items-center justify-center text-[#2196f3] hover:text-gray-600">
                   <svg
