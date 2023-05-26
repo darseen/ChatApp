@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../features/userSlice";
 
 export default function Example() {
-  const { user, token } = useSelector((state) => state.user);
+  const { user, token } = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

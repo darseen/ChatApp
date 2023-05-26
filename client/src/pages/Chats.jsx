@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import { sendMessage } from "../features/messageSlice";
 import axios from "axios";
 
 import Sidebar from "../components/Sidebar";
@@ -10,15 +9,13 @@ import MessageDirection from "../components/MessageDirection";
 const socket = io("http://192.168.1.113:3001");
 
 const Chats = () => {
-  const { user, token } = useSelector((state) => state.user);
+  const { user, token } = useSelector((state) => state);
   const [user2, setUser2] = useState({});
   const [chatId, setChatId] = useState(null);
   const [message, setMessage] = useState("");
   const [displayMessages, setDisplayMessages] = useState([]);
   const [oldChatMessages, setOldChatMessages] = useState([]);
   const [newChatMessages, setNewChatMessages] = useState([]);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setDisplayMessages([]);
@@ -62,13 +59,32 @@ const Chats = () => {
   }, [newChatMessages]);
 
   const handleSendMessage = () => {
+    // send message to server to store in the database
+    const sendMessage = async (data) => {
+      const { content, user1, user2, token } = data;
+
+      try {
+        const res = await axios.post(
+          "http://192.168.1.113:3001/message",
+          { content, user1, user2 },
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        return res.data;
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
     const data = {
       token,
       content: message,
       user1: user?._id,
       user2: user2?._id,
     };
-    dispatch(sendMessage(data));
+    sendMessage(data);
 
     const messageData = {
       username: user.username,

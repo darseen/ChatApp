@@ -13,7 +13,7 @@ import "./App.css";
 import { useSelector } from "react-redux";
 
 const App = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state);
   return (
     <>
       <Routes>

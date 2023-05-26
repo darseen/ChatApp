@@ -20,8 +20,8 @@ const Sidebar = ({ setUser2 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { username, _id: userId } = useSelector((state) => state.user.user);
-  const { token } = useSelector((state) => state.user);
+  const { username, _id: userId } = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state);
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({ username });
   const [activeUsers, setActiveUsers] = useState([]);
