@@ -59,7 +59,7 @@ const GlobalChat = () => {
         ""
       )}
       <div className="flex flex-row h-full w-full overflow-x-hidden">
-        <GlobalSidebar users={users} />
+        <GlobalSidebar users={users} socket={socket} />
         <div className="flex flex-col flex-auto h-full p-1">
           <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-tranparent h-full p-1">
             <div

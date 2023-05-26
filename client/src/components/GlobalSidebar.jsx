@@ -6,7 +6,7 @@ import { MdMenu } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
 import ActiveUsers from "./ActiveUsers";
 
-const GlobalSidebar = ({ users }) => {
+const GlobalSidebar = ({ users, socket }) => {
   const isMobileScreen = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isMobileScreen ? false : true);
   const sidebarRef = useRef();
@@ -73,12 +73,14 @@ const GlobalSidebar = ({ users }) => {
                 />
               </svg>
             </div>
-            <Link
-              to="/"
-              className="ml-2 font-bold text-2xl animate-text bg-gradient-to-r from-[#2196f3] via-white to-[#2196f3] bg-clip-text text-transparent"
-            >
-              ChatApp
-            </Link>
+            <div onClick={() => socket.disconnect()}>
+              <Link
+                to="/"
+                className="ml-2 font-bold text-2xl animate-text bg-gradient-to-r from-[#2196f3] via-white to-[#2196f3] bg-clip-text text-transparent"
+              >
+                ChatApp
+              </Link>
+            </div>
           </div>
           <div className="flex flex-col mt-8">
             <div className="flex flex-row items-center justify-between text-xs">
