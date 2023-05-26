@@ -38,7 +38,7 @@ const Sidebar = ({ setUser2 }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get("http://192.168.1.113:3001/users", {
+        const res = await axios.get("https://chatapp-zkxz.onrender.com/users", {
           headers: {
             Authorization: "Bearer " + token,
           },
