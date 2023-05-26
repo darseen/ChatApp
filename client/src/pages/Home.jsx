@@ -37,14 +37,14 @@ const Home = () => {
             Redux. Styled with Tailwind CSS
           </h2>
           <div className="text-center flex flex-row justify-center mt-10">
-            <Link
+            <a
               className="inline-flex items-center py-2 font-semibold rounded-xl text-black ml-3 bg-white px-7 text-md md:mt-0 hover:text-black hover:bg-white focus:shadow-outline"
-              to="/global"
+              href="/global"
             >
               <div className="flex text-lg">
                 <span className="justify-center">Global Chat</span>
               </div>
-            </Link>
+            </a>
             {!user.token ? (
               <Link
                 className="inline-flex items-center p-1 font-semibold text-lg rounded-xl tracking-tighter mr-3 text-white  bg-transparent ml-11 bg-gradient-to-r from-blue-500 to-blue-800 px-14 text-md md:mt-0 focus:shadow-outline"
