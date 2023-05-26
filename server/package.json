@@ -20,5 +20,8 @@
     "mongoose": "^7.1.1",
     "morgan": "^1.10.0",
     "socket.io": "^4.6.1"
+  },
+  "devDependencies": {
+    "@socket.io/admin-ui": "^0.5.1"
   }
 }

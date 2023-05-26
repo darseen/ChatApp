@@ -12,6 +12,7 @@ const socket = io("http://192.168.1.113:3001");
 const Chats = () => {
   const { user, token } = useSelector((state) => state.user);
   const [user2, setUser2] = useState({});
+  const [chatId, setChatId] = useState(null);
   const [message, setMessage] = useState("");
   const [displayMessages, setDisplayMessages] = useState([]);
   const [oldChatMessages, setOldChatMessages] = useState([]);
@@ -23,6 +24,7 @@ const Chats = () => {
     setDisplayMessages([]);
   }, [user2]);
 
+  //  update display messages when old messages are fetched
   useEffect(() => {
     if (oldChatMessages) {
       const oldChatMessagesFormat = oldChatMessages.map((obj) => ({
@@ -34,6 +36,7 @@ const Chats = () => {
     }
   }, [oldChatMessages]);
 
+  // fetch old messages from database
   useEffect(() => {
     const fetchMessages = async () => {
       try {
@@ -44,7 +47,7 @@ const Chats = () => {
             user2: user2?._id,
           },
         });
-
+        setChatId(res.data?.chat?._id);
         setOldChatMessages(res.data?.chat?.messages);
       } catch (err) {
         console.log(err);
@@ -71,9 +74,28 @@ const Chats = () => {
       username: user.username,
       message,
     };
+    //send message to private room
+    socket.emit("send_private_message", { messageData, chatId });
+
     setNewChatMessages((currentList) => [...currentList, messageData]);
     setMessage("");
   };
+
+  /* SOCKET CONNECTION */
+
+  // join private chat room
+  useEffect(() => {
+    if (chatId) {
+      socket.emit("join_private_chat", chatId);
+    }
+  }, [chatId]);
+
+  // receive message
+  useEffect(() => {
+    socket.on("receive_private_message", (message) => {
+      setDisplayMessages((currentList) => [...currentList, message]);
+    });
+  }, [socket]);
 
   return (
     <div className="flex h-screen antialiased text-gray-800">

@@ -6,6 +6,7 @@ import helmet from "helmet";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import { instrument } from "@socket.io/admin-ui";
 
 /* ROUTES IMPORT */
 import userRoutes from "./routes/user.js";
@@ -22,8 +23,10 @@ app.use(morgan("common"));
 dotenv.config();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: "*",
-  methods: ["GET", "POST"],
+  cors: {
+    origin: "*",
+  },
+  // methods: ["GET", "POST"],
 });
 
 /* ROUTES */
@@ -62,13 +65,16 @@ io.on("connection", (socket) => {
   });
 
   /* PRIVATE CHATS */
-  socket.on("privateChat", (chatId) => {
+  socket.on("join_private_chat", (chatId) => {
+    console.log("Joined Room: ", chatId);
     socket.join(chatId);
-    socket.on("sendPrivateMessage", (message) => {
-      io.to(chatId).emit("receivePrivateMessage", message);
-    });
+  });
+  socket.on("send_private_message", ({ messageData: message, chatId }) => {
+    console.log(message, chatId);
+    socket.to(chatId).emit("receive_private_message", message);
   });
 });
+instrument(io, { auth: false });
 
 mongoose
   .connect(MONGODB_URL, {
