@@ -26,6 +26,7 @@ const Sidebar = ({ setUser2 }) => {
   const [user, setUser] = useState({ username });
   const [activeUsers, setActiveUsers] = useState([]);
 
+  // get active users list
   useEffect(() => {
     socket.emit("get_active_users");
     socket.on("send_users", (data) => {
@@ -33,8 +34,9 @@ const Sidebar = ({ setUser2 }) => {
     });
   }, [user]);
 
+  //fetch registered users from the database
   useEffect(() => {
-    (async () => {
+    const fetchUsers = async () => {
       try {
         const res = await axios.get("http://192.168.1.113:3001/users", {
           headers: {
@@ -45,15 +47,18 @@ const Sidebar = ({ setUser2 }) => {
       } catch (err) {
         console.log(err.message);
       }
-    })();
+    };
+    fetchUsers();
   }, [user]);
 
+  //logout handle
   const handleLogout = () => {
     const args = { userId, token };
     dispatch(logout(args));
     navigate("/");
   };
 
+  // set the sidebar open depending on screen size
   useEffect(() => {
     if (isMobileScreen) {
       setOpen(false);

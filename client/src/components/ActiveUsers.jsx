@@ -1,3 +1,5 @@
+// display active users in the GlobalSidebar
+
 const ActiveUsers = ({ users }) => {
   return users.map((user) => {
     return (

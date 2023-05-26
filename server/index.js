@@ -26,7 +26,7 @@ const io = new Server(server, {
   cors: {
     origin: "*",
   },
-  // methods: ["GET", "POST"],
+  methods: ["GET", "POST"],
 });
 
 /* ROUTES */
@@ -38,6 +38,7 @@ const PORT = process.env.PORT || 3001;
 const MONGODB_URL = process.env.MONGODB_URL;
 
 let activeUsers = new Map();
+// exporting active users map to be modified in other files
 export const getActiveUsers = () => activeUsers;
 export const setActiveUsers = (value) => (activeUsers = value);
 
@@ -49,7 +50,7 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("global_server", data);
   });
 
-  /* GET USERNAME */
+  // get username from global chat
   socket.on("users", (data) => {
     activeUsers.set(socket.id, data);
     io.emit("send_users", Array.from(activeUsers.values()));

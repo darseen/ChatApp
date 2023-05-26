@@ -1,3 +1,5 @@
+/* SET MESSAGE DIRECTION BASED ON SENDER OR RECEIVER */
+
 const MessagesDirection = ({ messages, username }) => {
   return messages.map((data) => {
     return username === data?.username ? (

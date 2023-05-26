@@ -1,3 +1,5 @@
+// username modal popup in the GlobalChat
+
 import { useState } from "react";
 
 const UsernameModal = ({ setUsername, socket }) => {

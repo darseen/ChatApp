@@ -52,7 +52,6 @@ const GlobalSidebar = ({ users }) => {
       <motion.div
         ref={sidebarRef}
         variants={Nav_animation}
-        // initial={{ x: isMobileScreen ? 0 : -250 }}
         animate={open ? "open" : "closed"}
         className=" md:bg-transparent bg-slate-950 text-gray shadow-xl z-[998] max-w-[17rem] w-[17rem] overflow-hidden md:relative fixed h-screen"
       >

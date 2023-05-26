@@ -25,6 +25,7 @@ export const fetchMessages = async (req, res) => {
 export const createMessage = async (req, res) => {
   const { content, user1, user2 } = req.body;
   console.log(content, user1, user2);
+
   if (!content) {
     return res.status(403).json({ message: "Cannot send empty message" });
   }
@@ -34,16 +35,13 @@ export const createMessage = async (req, res) => {
     const newMessage = new Message({ content, sender: user1 });
 
     if (!chat) {
-      console.log("no chat");
       const newChat = new Chat({
         participants: [user1, user2],
         messages: [newMessage],
       });
 
       await newChat.save();
-      console.log("chat created");
     } else {
-      console.log("chat exists");
       chat.messages.push(newMessage);
       await chat.save();
     }

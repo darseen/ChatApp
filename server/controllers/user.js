@@ -7,12 +7,16 @@ export const register = async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
+    // password hash
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
+
+    // user & token creation
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
 
+    // setting the user state as active by adding it to the map
     const activeUsers = getActiveUsers();
     activeUsers.set(newUser.email, newUser.username);
     setActiveUsers(activeUsers);
@@ -38,6 +42,7 @@ export const login = async (req, res) => {
     delete user.password;
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
+    // setting the user state as active by adding it to the map
     const activeUsers = getActiveUsers();
     activeUsers.set(user.email, user.username);
     setActiveUsers(activeUsers);
@@ -74,8 +79,10 @@ export const logout = async (req, res) => {
     const user = await User.findById(userId).lean();
     if (!user) return res.status(404).json({ message: "User not found!" });
 
+    // setting the user state as active by adding it to the map
     const activeUsers = getActiveUsers();
     activeUsers.delete(user.email);
+    setActiveUsers(activeUsers);
 
     res.status(200).json({ message: "user logged out successfully!" });
   } catch (err) {

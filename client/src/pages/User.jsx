@@ -13,6 +13,7 @@ const User = () => {
   const [user, setUser] = useState(null);
   const [activeUsers, setActiveUsers] = useState([]);
 
+  // get active users list
   useEffect(() => {
     socket.emit("get_active_users");
     socket.on("send_users", (data) => {
@@ -20,17 +21,20 @@ const User = () => {
     });
   }, [socket]);
 
+  // get user's info from server
   useEffect(() => {
-    (async () => {
+    const fetchUser = async () => {
       try {
         const res = await axios.get(`http://192.168.1.113:3001/user/${userId}`);
         setUser(res.data);
       } catch (err) {
         setIsLoading(false);
         console.log(err.message);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    })();
+    };
+    fetchUser();
   }, []);
 
   if (isLoading) {
