@@ -7,7 +7,7 @@ Built using [React.js](https://react.dev/), [Node.js](https://nodejs.org/), [Exp
 ## Home Page
 ![](/screenshots/img1.png)
 
-## Global Chat
+## Global Chat 
 ![](/screenshots/img2.png)
 
 ## Private Chat
