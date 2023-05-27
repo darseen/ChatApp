@@ -2,7 +2,7 @@
 
 > A Realtime Chat Application
 
-Built using [React.js](https://react.dev/), [Node.js](https://nodejs.org/), [Express.js](https://expressjs.com/) and [MongoDB](https://www.mongodb.com/).
+Built with [React.js](https://react.dev/) for the frontend and [Redux](https://redux.js.org/) for state management, [Node.js](https://nodejs.org/) for the server run time, [Express.js](https://expressjs.com/) for creating API endpoints and [MongoDB](https://www.mongodb.com/) fot the database.
 
 ## Home Page
 ![](/screenshots/img1.png)
